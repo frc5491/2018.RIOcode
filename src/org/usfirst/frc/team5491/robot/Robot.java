@@ -48,7 +48,6 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		// Use the joystick X axis for lateral movement, Y axis for forward
 		// movement, and Z axis for rotation.
-		m_robotDrive.driveCartesian(m_stick.getX(), m_stick.getY(),
-				m_stick.getZ(), 0.0);
+		m_robotDrive.driveCartesian(m_stick.getX(), m_stick.getY(),	m_stick.getZ(), 0.0);
 	}
 }
