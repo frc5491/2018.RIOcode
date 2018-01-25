@@ -47,6 +47,10 @@ public class Robot extends IterativeRobot {
 
 	private MecanumDrive m_robotDrive;
 	private Joystick m_stick;
+	
+	private Compressor pressr; // the compressor
+	private boolean pressrEnabled; // marker for compressor state (on/off)
+	private boolean pressrSwitch; //marker for pressure switch (on/off)
 
 	@Override
 	public void robotInit() {
@@ -68,6 +72,11 @@ public class Robot extends IterativeRobot {
 		m_stick = new Joystick(kJoystickChannel);
 		
 		/* Gripper Intake Motor Code */
+		
+		/* Pneumatic General Code */
+			Compressor pressr = new Compressor (0);
+			/* Enable PCM control to turn on compressor at 120 PSI */
+			pressr.setClosedLoopControl(true);
 		
 		/* Pneumatic Scissor Lift Code */
 		
@@ -141,9 +150,18 @@ public class Robot extends IterativeRobot {
 		
 		/* Move scissor to pre-programmed CLIMBING height */
 		
+		/* Display/Annunciate information to driver station */
+		pressrEnabled = pressr.enabled(); // gather current compressor state
+		pressrSwitch = pressr.getPressureSwitchValue(); // gather current pressure switch state
+		
 	}
+	
 	@Override
 	public void testPeriodic() {
+
+		/* Display/Annunciate information to driver station */
+		pressrEnabled = pressr.enabled(); // gather current compressor state
+		pressrSwitch = pressr.getPressureSwitchValue(); // gather current pressure switch state
 		
 	}
 }
