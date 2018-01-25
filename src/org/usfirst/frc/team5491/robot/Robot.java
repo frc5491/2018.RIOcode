@@ -87,6 +87,9 @@ public class Robot extends IterativeRobot {
 		
 		/* Vision System (HUD) Code */
 			dashboard = new SmartDashboard();
+			/* Display/Annunciate information to driver station */
+			dashboard.putBoolean("Compressor State", pressr.enabled());
+			dashboard.putBoolean("Pressure Switch", pressr.getPressureSwitchValue());
 		
 		/* Driver Station (HMI) Code */
 			m_stick = new Joystick(kJoystickChannel);
@@ -156,8 +159,8 @@ public class Robot extends IterativeRobot {
 		/* Move scissor to pre-programmed CLIMBING height */
 		
 		/* Display/Annunciate information to driver station */
-		dashboard.putBoolean("Compressor State", pressr.enabled());
-		dashboard.putBoolean("Pressure Switch", pressr.getPressureSwitchValue());
+			//dashboard.putBoolean("Compressor State", pressr.enabled());
+			//dashboard.putBoolean("Pressure Switch", pressr.getPressureSwitchValue());
 		
 	}
 	
