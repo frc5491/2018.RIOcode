@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 
 /* Imports for HUD */
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 
 /* Imports for Pneumatics */
 import edu.wpi.first.wpilibj.Compressor;
@@ -51,25 +52,27 @@ public class Robot extends IterativeRobot {
 	private Compressor pressr; // the compressor
 	private boolean pressrEnabled; // marker for compressor state (on/off)
 	private boolean pressrSwitch; //marker for pressure switch (on/off)
+	private SmartDashboard dashboard;
+
 
 	@Override
 	public void robotInit() {
 		
 		/* Mecanum Drive Motor Code */
 		
-		Spark frontLeft = new Spark(kFrontLeftChannel);
-		Spark rearLeft = new Spark(kRearLeftChannel);
-		Spark frontRight = new Spark(kFrontRightChannel);
-		Spark rearRight = new Spark(kRearRightChannel);
+			Spark frontLeft = new Spark(kFrontLeftChannel);
+			Spark rearLeft = new Spark(kRearLeftChannel);
+			Spark frontRight = new Spark(kFrontRightChannel);
+			Spark rearRight = new Spark(kRearRightChannel);
+	
+			// Invert the left side motors.
+			// You may need to change or remove this to match your robot.
+			frontLeft.setInverted(true);
+			rearLeft.setInverted(true);
+	
+			m_robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
-		// Invert the left side motors.
-		// You may need to change or remove this to match your robot.
-		frontLeft.setInverted(true);
-		rearLeft.setInverted(true);
 
-		m_robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
-
-		m_stick = new Joystick(kJoystickChannel);
 		
 		/* Gripper Intake Motor Code */
 		
@@ -77,17 +80,18 @@ public class Robot extends IterativeRobot {
 			Compressor pressr = new Compressor (0);
 			/* Enable PCM control to turn on compressor at 120 PSI */
 			pressr.setClosedLoopControl(true);
-		
+
 		/* Pneumatic Scissor Lift Code */
 		
 		/* Pneumatic Gripper Code */
 		
 		/* Vision System (HUD) Code */
+			dashboard = new SmartDashboard();
 		
 		/* Driver Station (HMI) Code */
-		
+			m_stick = new Joystick(kJoystickChannel);
+
 		/* Field Data (FMS) Code */
-		
 		
 	}
 
@@ -130,9 +134,10 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void teleopPeriodic() {
-		// Use the joystick X axis for lateral movement, Y axis for forward
-		// movement, and Z axis for rotation.
-		m_robotDrive.driveCartesian(m_stick.getX(), m_stick.getY(),	m_stick.getZ(), 0.0);
+		/* Use the joystick X axis for lateral movement, Y axis for forward
+		 * movement, and Z axis for rotation. */
+		
+			m_robotDrive.driveCartesian(m_stick.getX(), m_stick.getY(),	m_stick.getZ(), 0.0);
 		
 		/* Manually move scissor lift up/down */
 		
@@ -151,8 +156,8 @@ public class Robot extends IterativeRobot {
 		/* Move scissor to pre-programmed CLIMBING height */
 		
 		/* Display/Annunciate information to driver station */
-		pressrEnabled = pressr.enabled(); // gather current compressor state
-		pressrSwitch = pressr.getPressureSwitchValue(); // gather current pressure switch state
+		dashboard.putBoolean("Compressor State", pressr.enabled());
+		dashboard.putBoolean("Pressure Switch", pressr.getPressureSwitchValue());
 		
 	}
 	
