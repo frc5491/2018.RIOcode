@@ -7,10 +7,35 @@
 
 package org.usfirst.frc.team5491.robot;
 
+/* Imports for Drive System */
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+
+/* Imports for HMI and Sensors (IO) */
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.AnalogOutput;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.RobotState;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.Ultrasonic;
+
+/* Imports for HUD */
+import edu.wpi.first.wpilibj.CameraServer;
+
+/* Imports for Pneumatics */
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
+
+/* Imports for Miscellaneous Functions */
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 
 public class Robot extends IterativeRobot {
 	private static final int kFrontLeftChannel = 2;
