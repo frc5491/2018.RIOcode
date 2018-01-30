@@ -23,6 +23,8 @@ import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.GenericHID;
+
 
 /* Imports for HUD */
 import edu.wpi.first.wpilibj.CameraServer;
@@ -49,9 +51,14 @@ public class Robot extends IterativeRobot {
 	private MecanumDrive m_robotDrive;
 	private Joystick m_stick;
 	
+	//private GenericHID coPilot; // auxiliary controls
+	
 	private Compressor pressr; // the compressor
 	private boolean pressrEnabled; // marker for compressor state (on/off)
 	private boolean pressrSwitch; //marker for pressure switch (on/off)
+	private DoubleSolenoid scissorActuator; // double-solenoid for scissor lift up/down
+	private Solenoid scissorCircuit; // single-solenoid for source pressure to system
+	
 	private SmartDashboard dashboard;
 
 
@@ -91,6 +98,7 @@ public class Robot extends IterativeRobot {
 		
 		/* Driver Station (HMI) Code */
 			m_stick = new Joystick(kJoystickChannel);
+			//coPilot = new GenericHID(1); // lock control "brain" to port 1
 
 		/* Field Data (FMS) Code */
 		
@@ -187,15 +195,15 @@ public class Robot extends IterativeRobot {
 		
 		/* Test code for scissor up/down
 		 * Control "scissor actuator" and "scissor circuit" solenoids with up/down (+Y/-Y)
-		 * joystick action.
-		 * 
-		 * When joystick is pushed up (+Y), move double-solenoid to port A
-		 * (pushing into end of piston), also open "scissor circuit" solenoid to allow airflow.
-		 * 
-		 * When joystick is pushed down (-Y), move double-solenoid to port B (pushing 
-		 * into upper side of piston), also open "scissor circuit" solenoid to allow airflow.
-		 * 
-		 * When joystick is neutral (Y=0), close the "scissor circuit" solenoid to halt airflow. */
+		 * joystick action.*/
+
+		/* When joystick is pushed up (+Y), move double-solenoid to port A
+		 * (pushing into end of piston), also open "scissor circuit" solenoid to allow airflow.*/
+ 
+		/* When joystick is pushed down (-Y), move double-solenoid to port B (pushing 
+		 * into upper side of piston), also open "scissor circuit" solenoid to allow airflow. */
+
+		/* When joystick is neutral (Y=0), close the "scissor circuit" solenoid to halt airflow. */
 		
 	}
 }
