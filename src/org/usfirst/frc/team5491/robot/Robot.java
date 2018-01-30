@@ -56,7 +56,7 @@ public class Robot extends IterativeRobot {
 
 
 	@Override
-	public void robotInit() {
+	public void robotInit() { // robo-boot code
 		
 		/* Mecanum Drive Motor Code */
 		
@@ -71,9 +71,7 @@ public class Robot extends IterativeRobot {
 			rearLeft.setInverted(true);
 	
 			m_robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
-
-
-		
+	
 		/* Gripper Intake Motor Code */
 		
 		/* Pneumatic General Code */
@@ -143,6 +141,17 @@ public class Robot extends IterativeRobot {
 			m_robotDrive.driveCartesian(m_stick.getX(), m_stick.getY(),	m_stick.getZ(), 0.0);
 		
 		/* Manually move scissor lift up/down */
+			
+			/* Moving the scissor up and down uses air input into the base of the actuator 
+			 * causing the piston to extend. The double solenoid will extend the piston as long 
+			 * as there is air pressure being fed into it. By putting a single solenoid in-line 
+			 * and preceding the input pressure side of the double solenoid, the flow of air 
+			 * should cease, causing the actuator to stop moving */
+			
+			/* Using a joystick on the co-pilot side of the driver station, the second 
+			 * operator may raise/lower the scissor by moving the joystick in the +Y or -Y 
+			 * direction.
+			 */
 		
 		/* Manually engage intake to grab/drop (forward/reverse) cubes */
 		
@@ -166,10 +175,27 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void testPeriodic() {
+		
+		/* Use the joystick X axis for lateral movement, Y axis for forward
+		 * movement, and Z axis for rotation. */
+		
+			m_robotDrive.driveCartesian(m_stick.getX(), m_stick.getY(),	m_stick.getZ(), 0.0);
 
 		/* Display/Annunciate information to driver station */
 		pressrEnabled = pressr.enabled(); // gather current compressor state
 		pressrSwitch = pressr.getPressureSwitchValue(); // gather current pressure switch state
+		
+		/* Test code for scissor up/down
+		 * Control "scissor actuator" and "scissor circuit" solenoids with up/down (+Y/-Y)
+		 * joystick action.
+		 * 
+		 * When joystick is pushed up (+Y), move double-solenoid to port A
+		 * (pushing into end of piston), also open "scissor circuit" solenoid to allow airflow.
+		 * 
+		 * When joystick is pushed down (-Y), move double-solenoid to port B (pushing 
+		 * into upper side of piston), also open "scissor circuit" solenoid to allow airflow.
+		 * 
+		 * When joystick is neutral (Y=0), close the "scissor circuit" solenoid to halt airflow. */
 		
 	}
 }
